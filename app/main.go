@@ -1,12 +1,15 @@
 package main
 
 import (
+	"net/url"
+
 	"github.com/Danila331/HACH-T1/app/servers"
 	"github.com/Danila331/HACH-T1/app/store"
 )
 
 func main() {
-	conn, err := store.ConnectDB()
+	password := url.QueryEscape("g!AVY93W<$}d&x")
+	conn, err := store.ConnectToPostgresSql("45.10.43.153", "5432", "gen_user", password, "default_db")
 	if err != nil {
 		panic(err)
 	}
