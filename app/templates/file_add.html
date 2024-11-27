@@ -28,22 +28,25 @@
                     <a href="/uploads/add" class="header__button"><img src="/static/images/plus.png" alt="" class="block1__image">Добавить</a>
                 </div>
             </div>
-            <form id="fileUploadForm" action="uploads/add/file/submit" method="post" class="form">
-                <label for="fileInput" class="file-label">
-                    Выберите файл
-                    <input 
-                        type="file" 
-                        id="fileInput" 
-                        name="file" 
-                        accept=".pdf,.txt,.docx,.doc,.csv,.xlsx,.xls,.json" 
-                        required>
-                </label>
-                <p class="file-types">
-                    Поддерживаемые типы: PDF, TXT, DOCX, DOC, CSV, XLSX, XLS, JSON
-                </p>
-                <button type="submit" class="submit-btn">Загрузить</button>
-                <p id="message" class="message"></p>
-            </form>
+            <div class="content">
+                <form id="fileUploadForm" action="/uploads/add/file/submit" method="POST" class="form" enctype="multipart/form-data">
+                    <label for="fileInput" class="file-label">
+                        Выберите файлы
+                        <input 
+                            type="file" 
+                            id="fileInput" 
+                            name="files[]" 
+                            accept=".pdf,.txt,.docx,.doc,.csv,.xlsx,.xls,.json" 
+                            multiple 
+                            required>
+                    </label>
+                    <p class="file-types">
+                        Поддерживаемые типы: PDF, TXT, DOCX, DOC, CSV, XLSX, XLS, JSON
+                    </p>
+                    <button type="submit" class="submit-btn">Загрузить</button>
+                    <p id="message" class="message"></p>
+                </form>
+            </div>
         </div>
     </div>
 </body>

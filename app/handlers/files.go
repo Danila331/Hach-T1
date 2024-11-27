@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"fmt"
-	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"text/template"
@@ -27,55 +27,68 @@ func AddFilePage(c echo.Context) error {
 }
 
 func AddFileSubmit(c echo.Context) error {
-	// Получаем файл из формы
-	file, err := c.FormFile("file")
+	form, err := c.MultipartForm()
+	if err != nil {
+		return c.String(http.StatusBadRequest, "Failed to parse form")
+	}
+
+	files := form.File["files[]"]
+	if len(files) == 0 {
+		return c.String(http.StatusBadRequest, "No files uploaded")
+	}
+
+	saveDir := "uploads"
+	if err := os.MkdirAll(saveDir, os.ModePerm); err != nil {
+		return c.String(http.StatusInternalServerError, "Failed to create upload directory")
+	}
+
+	for _, file := range files {
+		src, err := file.Open()
+		if err != nil {
+			return c.String(http.StatusInternalServerError, fmt.Sprintf("Failed to open file: %s", file.Filename))
+		}
+		defer src.Close()
+
+		// Destination file path
+		destPath := filepath.Join(saveDir, file.Filename)
+		dest, err := os.Create(destPath)
+		if err != nil {
+			return c.String(http.StatusInternalServerError, fmt.Sprintf("Failed to create file: %s", file.Filename))
+		}
+		defer dest.Close()
+
+		// Copy file content
+		if _, err := dest.ReadFrom(src); err != nil {
+			return c.String(http.StatusInternalServerError, fmt.Sprintf("Failed to save file: %s", file.Filename))
+		}
+		// Закончился код загрузки файла
+		var modelFile = models.File{
+			Name: file.Filename,
+			Path: string(destPath),
+		}
+
+		err = modelFile.Create()
+		if err != nil {
+			return err
+		}
+
+		err = pkg.S3LoadFile(file.Filename, destPath)
+		if err != nil {
+			return err
+		}
+	}
+
+	println("Files uploaded successfully")
+
+	htmlFiles := []string{
+		filepath.Join("./", "templates", "submit", "file_submit.html"),
+	}
+
+	templ, err := template.ParseFiles(htmlFiles...)
 	if err != nil {
 		return err
 	}
 
-	// Открываем файл для чтения
-	src, err := file.Open()
-	if err != nil {
-		return err
-	}
-	defer src.Close()
-
-	// Создаем путь для сохранения файла на локальной машине
-	uploadsDir := "uploads"
-	if err := os.MkdirAll(uploadsDir, os.ModePerm); err != nil {
-		return err
-	}
-	dstPath := filepath.Join(uploadsDir, file.Filename)
-
-	// Создаем файл на локальной машине
-	dst, err := os.Create(dstPath)
-	if err != nil {
-		return err
-	}
-	defer dst.Close()
-
-	// Копируем содержимое файла из запроса в файл на локальной машине
-	if _, err = io.Copy(dst, src); err != nil {
-		return err
-	}
-
-	fmt.Println(dstPath)
-
-	println("File uploaded successfully")
-	// Закончился код загрузки файла
-	var modelFile = models.File{
-		Name: file.Filename,
-		Path: string(dstPath),
-	}
-
-	err = modelFile.Create()
-	if err != nil {
-		return err
-	}
-
-	err = pkg.S3LoadFile(file.Filename, dstPath)
-	if err != nil {
-		return err
-	}
+	templ.ExecuteTemplate(c.Response(), "file_submit", nil)
 	return nil
 }

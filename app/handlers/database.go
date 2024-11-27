@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"net/http"
 	"path/filepath"
 	"text/template"
 
@@ -54,9 +53,19 @@ func AddPostgressqlSubmit(c echo.Context) error {
 	}
 	err := db.Create()
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return err
 	}
-	return c.String(http.StatusOK, "Postgressql submit")
+	htmlFiles := []string{
+		filepath.Join("./", "templates", "submit", "database_submit.html"),
+	}
+
+	templ, err := template.ParseFiles(htmlFiles...)
+	if err != nil {
+		return err
+	}
+
+	templ.ExecuteTemplate(c.Response(), "database_submit", nil)
+	return nil
 }
 
 func AddMysqlPage(c echo.Context) error {
@@ -90,9 +99,19 @@ func AddMysqlSubmit(c echo.Context) error {
 	}
 	err := db.Create()
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return err
 	}
-	return c.String(http.StatusOK, "Mysql submit")
+	htmlFiles := []string{
+		filepath.Join("./", "templates", "submit", "database_submit.html"),
+	}
+
+	templ, err := template.ParseFiles(htmlFiles...)
+	if err != nil {
+		return err
+	}
+
+	templ.ExecuteTemplate(c.Response(), "database_submit", nil)
+	return nil
 }
 
 func AddElasticsearchPage(c echo.Context) error {
@@ -125,9 +144,19 @@ func AddElasticsearchSubmit(c echo.Context) error {
 	}
 	err := db.Create()
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return err
 	}
-	return c.String(http.StatusOK, "Elasticsearch submit")
+	htmlFiles := []string{
+		filepath.Join("./", "templates", "submit", "database_submit.html"),
+	}
+
+	templ, err := template.ParseFiles(htmlFiles...)
+	if err != nil {
+		return err
+	}
+
+	templ.ExecuteTemplate(c.Response(), "database_submit", nil)
+	return nil
 }
 
 func AddMongodbPage(c echo.Context) error {
@@ -161,7 +190,17 @@ func AddMongodbSubmit(c echo.Context) error {
 	}
 	err := db.Create()
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return err
 	}
-	return c.String(http.StatusOK, "Mongodb submit")
+	htmlFiles := []string{
+		filepath.Join("./", "templates", "submit", "database_submit.html"),
+	}
+
+	templ, err := template.ParseFiles(htmlFiles...)
+	if err != nil {
+		return err
+	}
+
+	templ.ExecuteTemplate(c.Response(), "database_submit", nil)
+	return nil
 }
