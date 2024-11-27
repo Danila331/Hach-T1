@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/elastic/go-elasticsearch/v8"
-	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -19,6 +18,37 @@ import (
 // POSTGRESQL_USER=gen_user
 // POSTGRESQL_PASSWORD=g!AVY93W<$}d&x
 // POSTGRESQL_DBNAME=default_db
+
+// Константы подключения к базе данных PostgreSQL
+const (
+	POSTGRESQL_HOST     = "45.10.43.153"
+	POSTGRESQL_PORT     = 5432
+	POSTGRESQL_USER     = "gen_user"
+	POSTGRESQL_PASSWORD = "g!AVY93W<$}d&x"
+	POSTGRESQL_DBNAME   = "default_db"
+)
+
+func ConnectDB() (*sql.DB, error) {
+	// Формирование строки подключения
+	connStr := fmt.Sprintf(
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		POSTGRESQL_HOST, POSTGRESQL_PORT, POSTGRESQL_USER, POSTGRESQL_PASSWORD, POSTGRESQL_DBNAME,
+	)
+
+	// Открытие соединения с базой данных
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		return nil, fmt.Errorf("не удалось открыть соединение с PostgreSQL: %v", err)
+	}
+
+	// Проверка соединения
+	if err = db.Ping(); err != nil {
+		return nil, fmt.Errorf("не удалось подключиться к PostgreSQL: %v", err)
+	}
+
+	fmt.Println("Успешное подключение к PostgreSQL")
+	return db, nil
+}
 
 func ConnectToPostgresSql(host, port, user, password, dbname string) (*sql.DB, error) {
 	// Строка подключения к базе данных PostgreSQL

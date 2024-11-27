@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"text/template"
 
+	"github.com/Danila331/HACH-T1/app/models"
 	"github.com/Danila331/HACH-T1/app/pkg"
 	"github.com/labstack/echo/v4"
 )
@@ -62,6 +63,16 @@ func AddFileSubmit(c echo.Context) error {
 
 	println("File uploaded successfully")
 	// Закончился код загрузки файла
+	var modelFile = models.File{
+		Name: file.Filename,
+		Path: string(dstPath),
+	}
+
+	err = modelFile.Create()
+	if err != nil {
+		return err
+	}
+
 	err = pkg.S3LoadFile(file.Filename, dstPath)
 	if err != nil {
 		return err
