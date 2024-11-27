@@ -10,12 +10,8 @@ import (
 )
 
 func AddDatabasePage(c echo.Context) error {
-	return c.String(http.StatusOK, "database page")
-}
-
-func AddPostgressqlPage(c echo.Context) error {
 	htmlFiles := []string{
-		filepath.Join("./", "templates", "add_postgres.html"),
+		filepath.Join("./", "templates", "databases.html"),
 	}
 
 	templ, err := template.ParseFiles(htmlFiles...)
@@ -23,7 +19,21 @@ func AddPostgressqlPage(c echo.Context) error {
 		return err
 	}
 
-	templ.ExecuteTemplate(c.Response(), "add_postgres", nil)
+	templ.ExecuteTemplate(c.Response(), "databases", nil)
+	return nil
+}
+
+func AddPostgressqlPage(c echo.Context) error {
+	htmlFiles := []string{
+		filepath.Join("./", "templates", "database", "postgres_add.html"),
+	}
+
+	templ, err := template.ParseFiles(htmlFiles...)
+	if err != nil {
+		return err
+	}
+
+	templ.ExecuteTemplate(c.Response(), "postgres_add", nil)
 	return nil
 }
 
@@ -51,7 +61,7 @@ func AddPostgressqlSubmit(c echo.Context) error {
 
 func AddMysqlPage(c echo.Context) error {
 	htmlFiles := []string{
-		filepath.Join("./", "templates", "add_mysql.html"),
+		filepath.Join("./", "templates", "database", "mysql_add.html"),
 	}
 
 	templ, err := template.ParseFiles(htmlFiles...)
@@ -59,7 +69,7 @@ func AddMysqlPage(c echo.Context) error {
 		return err
 	}
 
-	templ.ExecuteTemplate(c.Response(), "add_mysql", nil)
+	templ.ExecuteTemplate(c.Response(), "mysql_add", nil)
 	return nil
 }
 
@@ -87,7 +97,7 @@ func AddMysqlSubmit(c echo.Context) error {
 
 func AddElasticsearchPage(c echo.Context) error {
 	htmlFiles := []string{
-		filepath.Join("./", "templates", "add_elastic.html"),
+		filepath.Join("./", "templates", "database", "elastic_add.html"),
 	}
 
 	templ, err := template.ParseFiles(htmlFiles...)
@@ -95,7 +105,7 @@ func AddElasticsearchPage(c echo.Context) error {
 		return err
 	}
 
-	templ.ExecuteTemplate(c.Response(), "add_elastic", nil)
+	templ.ExecuteTemplate(c.Response(), "elastic_add", nil)
 	return nil
 }
 
@@ -122,7 +132,7 @@ func AddElasticsearchSubmit(c echo.Context) error {
 
 func AddMongodbPage(c echo.Context) error {
 	htmlFiles := []string{
-		filepath.Join("./", "templates", "add_mongo.html"),
+		filepath.Join("./", "templates", "database", "mongodb_add.html"),
 	}
 
 	templ, err := template.ParseFiles(htmlFiles...)
@@ -130,7 +140,7 @@ func AddMongodbPage(c echo.Context) error {
 		return err
 	}
 
-	templ.ExecuteTemplate(c.Response(), "add_mongo", nil)
+	templ.ExecuteTemplate(c.Response(), "mongodb_add", nil)
 	return nil
 }
 

@@ -14,7 +14,7 @@ import (
 
 func AddFilePage(c echo.Context) error {
 	htmlFiles := []string{
-		filepath.Join("./", "templates", "add_file.html"),
+		filepath.Join("./", "templates", "file_add.html"),
 	}
 
 	templ, err := template.ParseFiles(htmlFiles...)
@@ -22,7 +22,7 @@ func AddFilePage(c echo.Context) error {
 		return err
 	}
 
-	templ.ExecuteTemplate(c.Response(), "add_file", nil)
+	templ.ExecuteTemplate(c.Response(), "file_add", nil)
 	return nil
 }
 

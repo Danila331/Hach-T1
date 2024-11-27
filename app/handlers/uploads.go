@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"net/http"
 	"path/filepath"
 	"text/template"
 
@@ -52,5 +51,15 @@ func UploadsPage(c echo.Context) error {
 }
 
 func UploadsAddPage(c echo.Context) error {
-	return c.String(http.StatusOK, "Uploads handler")
+	htmlFiles := []string{
+		filepath.Join("./", "templates", "upload_add.html"),
+	}
+
+	templ, err := template.ParseFiles(htmlFiles...)
+	if err != nil {
+		return err
+	}
+
+	templ.ExecuteTemplate(c.Response(), "upload_add", nil)
+	return nil
 }
