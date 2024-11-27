@@ -8,8 +8,11 @@ import (
 
 func StartServer() error {
 	app := echo.New()
+
+	app.Static("/static", "./static")
 	app.Use(middleware.Logger())
 	app.Use(middleware.Recover())
+
 	// Group for uploads
 	uploads := app.Group("/uploads")
 	uploads.GET("/", handlers.UploadsPage)

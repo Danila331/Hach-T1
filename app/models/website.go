@@ -2,7 +2,7 @@ package models
 
 import "github.com/Danila331/HACH-T1/app/store"
 
-type website struct {
+type Website struct {
 	ID   int
 	Name string
 	URL  string
@@ -10,12 +10,12 @@ type website struct {
 
 type WebsiteInterface interface {
 	Create() error
-	ReadAll() ([]website, error)
+	ReadAll() ([]Website, error)
 	Update() error
 	Delete() error
 }
 
-func (w *website) Create() error {
+func (w *Website) Create() error {
 	conn, err := store.ConnectDB()
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func (w *website) Create() error {
 	return nil
 }
 
-func (w *website) ReadAll() ([]website, error) {
+func (w *Website) ReadAll() ([]Website, error) {
 	conn, err := store.ConnectDB()
 	if err != nil {
 		return nil, err
@@ -39,9 +39,9 @@ func (w *website) ReadAll() ([]website, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	var websites []website
+	var websites []Website
 	for rows.Next() {
-		var website website
+		var website Website
 		err := rows.Scan(&website.ID, &website.Name, &website.URL)
 		if err != nil {
 			return nil, err
@@ -51,7 +51,7 @@ func (w *website) ReadAll() ([]website, error) {
 	return websites, nil
 }
 
-func (w *website) Update() error {
+func (w *Website) Update() error {
 	conn, err := store.ConnectDB()
 	if err != nil {
 		return err
@@ -64,7 +64,7 @@ func (w *website) Update() error {
 	return nil
 }
 
-func (w *website) Delete() error {
+func (w *Website) Delete() error {
 	conn, err := store.ConnectDB()
 	if err != nil {
 		return err

@@ -35,7 +35,7 @@ func AddPostgressqlSubmit(c echo.Context) error {
 	password := c.FormValue("password")
 	dbname := c.FormValue("dbname")
 	var db = models.Database{
-		Type:         "Postgressql",
+		Type:         "postgressql",
 		Host:         host,
 		Port:         port,
 		UserName:     user,
@@ -71,7 +71,7 @@ func AddMysqlSubmit(c echo.Context) error {
 	password := c.FormValue("password")
 	dbname := c.FormValue("dbname")
 	var db = models.Database{
-		Type:         "Mysql",
+		Type:         "mysql",
 		Host:         host,
 		Port:         port,
 		UserName:     user,
@@ -106,7 +106,7 @@ func AddElasticsearchSubmit(c echo.Context) error {
 	user := c.FormValue("user")
 	password := c.FormValue("password")
 	var db = models.Database{
-		Type:         "Elasticsearch",
+		Type:         "elasticsearch",
 		Host:         host,
 		Port:         port,
 		UserName:     user,
@@ -142,7 +142,7 @@ func AddMongodbSubmit(c echo.Context) error {
 	password := c.FormValue("password")
 	databasename := c.FormValue("dbname")
 	var db = models.Database{
-		Type:         "Mongodb",
+		Type:         "mongodb",
 		Host:         host,
 		Port:         port,
 		UserName:     user,
