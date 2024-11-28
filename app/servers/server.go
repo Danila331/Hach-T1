@@ -85,5 +85,5 @@ func StartServer() error {
 	website := uploads.Group("/add/website")
 	website.GET("/", handlers.AddWebsitePage)
 	website.POST("/submit", handlers.AddWebsiteSubmit)
-	return app.Start("172.16.106.89:8081")
+	return app.Start(":8080")
 }
