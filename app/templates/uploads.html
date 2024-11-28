@@ -15,9 +15,9 @@
         <div class="navigation">
             <h1 class="navigation__header">T1 virtual</h1>
             <div class="naviagtion__block1">
-                <a class="block1__text"><img src="/static/images/brick.png" alt="" class="block1__image">Конструктор<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
+                <a href="/maker/" class="block1__text"><img src="/static/images/brick.png" alt="" class="block1__image">Конструктор<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
                 <a class="block1__text"><img src="/static/images/llm.png" alt="" class="block1__image">Выбор LLM<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
-                <a class="block1__text" href="/uploads/"><img src="/static/images/upload.png" alt="" class="block1__image">Загрузка<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
+                <a class="block1__text" href="/uploads/" style="background-color: #E5E7EB;"><img src="/static/images/upload.png" alt="" class="block1__image">Загрузка<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
             </div>
         </div>
         <div class="main">
@@ -30,23 +30,35 @@
             <div class="cards">
             {{ range .Files}}
                 <div class="card">
-                    <img src="/static/images/document.png" alt="" class="card__image">
+                    <img src="/static/images/documents.png" alt="" class="card__image">
                     <p class="card__name">{{.Name}}</p>
-                    <a href="/uploads/edit/file/?id={{ .ID }}" class="card__button"><img src="/static/images/edit.png" alt="" class="card__buttton-image"></a>
+                    <form action="/uploads/delete/file/submit" method="POST" class="delete">
+                        <input type="hidden" name="id" value="{{ .ID }}">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
                 </div>
             {{ end}}
             {{ range .Websites }}
                 <div class="card">
-                    <img src="/static/images/global.png" alt="" class="card__image">
+                    <a href="/uploads/edit/website?id={{.ID}}" class="card__link"><img src="/static/images/website.png" alt="" class="card__image">
                     <p class="card__name">{{ .Name }}</p>
-                    <a href="/uploads/edit/website/?id={{.ID}}" class="card__button"><img src="/static/images/edit.png" alt="" class="card__buttton-image"></a>
+                    </a>
+                    <form action="/uploads/delete/website/submit" method="POST" class="delete">
+                        <input type="hidden" name="id" value="{{ .ID }}">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
                 </div>
             {{ end }}
             {{ range .Dbs }}
                 <div class="card">
-                    <img src="/static/images/database.png" alt="" class="card__image">
-                    <p class="card__name">{{ .DatabaseName }}</p>
-                    <a href="/uploads/edit/database/?id={{.ID}}" class="card__button"><img src="/static/images/edit.png" alt="" class="card__buttton-image"></a>
+                    <a href="/uploads/edit/database?id={{.ID}}" class="card__link">
+                        <img src="/static/images/database.png" alt="" class="card__image">
+                        <p class="card__name">{{ .DatabaseName }}</p>
+                    </a>
+                    <form action="/uploads/delete/database/submit" method="POST" class="delete">
+                        <input type="hidden" name="id" value="{{ .ID }}">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
                 </div>
             {{ end }}
         </div>

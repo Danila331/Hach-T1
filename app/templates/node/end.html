@@ -1,4 +1,4 @@
-{{ define "website"}}
+{{ define "end" }}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,36 +9,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/database.css">
-    <title>Document</title>
+    <title>Add Node end</title>
 </head>
 <body>
     <div class="body">
         <div class="navigation">
             <h1 class="navigation__header">T1 virtual</h1>
             <div class="naviagtion__block1">
-                <a class="block1__text"><img src="/static/images/brick.png" alt="" class="block1__image">Конструктор<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
+                <a class="block1__text" style="background-color: #E5E7EB;" href="/maker/"><img src="/static/images/brick.png" alt="" class="block1__image">Конструктор<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
                 <a class="block1__text"><img src="/static/images/llm.png" alt="" class="block1__image">Выбор LLM<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
-                <a class="block1__text" href="/uploads/" style="background-color: #E5E7EB;"><img src="/static/images/upload.png" alt="" class="block1__image">Загрузка<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
+                <a class="block1__text" href="/uploads/"><img src="/static/images/upload.png" alt="" class="block1__image">Загрузка<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
             </div>
         </div>
         <div class="main">
             <div class="header">
                 <div class="header__buttons">
                     <a href="#" class="header__button"><img src="/static/images/play.png" alt="" class="block1__image">Run</a>
-                    <a href="#" class="header__button"><img src="/static/images/plus.png" alt="" class="block1__image">Добавить</a>
+                    <a href="/maker/add" class="header__button"><img src="/static/images/plus.png" alt="" class="block1__image">Добавить</a>
                 </div>
             </div>
             <div class="content">
-            <form action="/uploads/add/website/submit" method="POST" class="database-form">
-                <h2>Подключение к интернет ресурсу</h2>
+            <form action="/maker/add/end/submit" method="POST" class="database-form">
+                <h2>Добавление блока END</h2>
             
-                <label for="name">Название ресурса:</label>
-                <input type="text" id="name" name="name" placeholder="Введите название ресурса" required>
-            
-                <label for="url">Url:</label>
-                <input type="url" id="url" name="url" placeholder="Введите url" required>
-            
-                <button type="submit" class="submit-btn">Подключиться</button>
+                <label for="text">Текст:</label>
+                <input type="text" id="text" name="text" placeholder="Введите фразу" required>
+                
+                <button type="submit" class="submit-btn">Добавить</button>
             </form>
             </div>
         </div>

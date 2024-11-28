@@ -1,4 +1,4 @@
-{{ define "website"}}
+{{ define "database_edit" }}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,16 +29,24 @@
                 </div>
             </div>
             <div class="content">
-            <form action="/uploads/add/website/submit" method="POST" class="database-form">
-                <h2>Подключение к интернет ресурсу</h2>
+            <form action="/uploads/edit/database/submit" method="POST" class="database-form">
+                <input type="hidden" name="id" value="{{ .ID }}">
+                <label for="host">Хост:</label>
+                <input type="text" id="host" name="host" value="{{ .Host }}" required>
             
-                <label for="name">Название ресурса:</label>
-                <input type="text" id="name" name="name" placeholder="Введите название ресурса" required>
+                <label for="port">Порт:</label>
+                <input type="number" id="port" name="port" value="{{ .Port }}" required>
             
-                <label for="url">Url:</label>
-                <input type="url" id="url" name="url" placeholder="Введите url" required>
+                <label for="user">Пользователь:</label>
+                <input type="text" id="user" name="user" value="{{ .UserName }}" required>
             
-                <button type="submit" class="submit-btn">Подключиться</button>
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" value="{{ .Password }}" required>
+            
+                <label for="dbname">Имя Базы Данных:</label>
+                <input type="text" id="dbname" name="dbname" value="{{ .DatabaseName }}" required>
+            
+                <button type="submit" class="submit-btn">Изменить</button>
             </form>
             </div>
         </div>

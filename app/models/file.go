@@ -11,6 +11,7 @@ type File struct {
 type FileInterface interface {
 	Create() error
 	ReadAll() ([]File, error)
+	ReadByID() (File, error)
 	Update() error
 	Delete() error
 }
@@ -49,6 +50,21 @@ func (f *File) ReadAll() ([]File, error) {
 		files = append(files, file)
 	}
 	return files, nil
+}
+
+func (f *File) ReadByID() (File, error) {
+	conn, err := store.ConnectDB()
+	if err != nil {
+		return File{}, err
+	}
+	defer conn.Close()
+	row := conn.QueryRow("SELECT * FROM files WHERE id=$1", f.ID)
+	var file File
+	err = row.Scan(&file.ID, &file.Name, &file.Path)
+	if err != nil {
+		return File{}, err
+	}
+	return file, nil
 }
 
 func (f *File) Update() error {

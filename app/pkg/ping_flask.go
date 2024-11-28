@@ -47,3 +47,47 @@ func sendRequest(url string, payload Payload) (string, error) {
 	// Возвращаем тело ответа как строку
 	return string(body), nil
 }
+
+type MessageResponse struct {
+	Context string `json:"context"`
+}
+
+// sendMessage отправляет сообщение и получает ответ от сервера
+func SendMessage(url string, message string) (MessageResponse, error) {
+	// Создаем тело запроса
+	payload := map[string]string{
+		"api_key": "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",
+		"prompt":  message,
+	}
+	jsonData, err := json.Marshal(payload)
+	if err != nil {
+		return MessageResponse{}, fmt.Errorf("ошибка при сериализации JSON: %v", err)
+	}
+
+	// Выполняем POST-запрос
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		return MessageResponse{}, fmt.Errorf("ошибка при выполнении POST-запроса: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// Проверяем статус ответа
+	if resp.StatusCode != http.StatusOK {
+		return MessageResponse{}, fmt.Errorf("получен некорректный код ответа: %d", resp.StatusCode)
+	}
+
+	// Читаем тело ответа
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return MessageResponse{}, fmt.Errorf("ошибка при чтении тела ответа: %v", err)
+	}
+
+	// Парсим JSON-ответ
+	var response MessageResponse
+	if err := json.Unmarshal(body, &response); err != nil {
+		return MessageResponse{}, fmt.Errorf("ошибка при десериализации JSON-ответа: %v", err)
+	}
+
+	// Возвращаем ответ
+	return response, nil
+}

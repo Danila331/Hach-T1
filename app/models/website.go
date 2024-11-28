@@ -11,6 +11,7 @@ type Website struct {
 type WebsiteInterface interface {
 	Create() error
 	ReadAll() ([]Website, error)
+	ReadByID() (Website, error)
 	Update() error
 	Delete() error
 }
@@ -49,6 +50,21 @@ func (w *Website) ReadAll() ([]Website, error) {
 		websites = append(websites, website)
 	}
 	return websites, nil
+}
+
+func (w *Website) ReadByID() (Website, error) {
+	conn, err := store.ConnectDB()
+	if err != nil {
+		return Website{}, err
+	}
+	defer conn.Close()
+	row := conn.QueryRow("SELECT * FROM websites WHERE id=$1", w.ID)
+	var website Website
+	err = row.Scan(&website.ID, &website.Name, &website.URL)
+	if err != nil {
+		return Website{}, err
+	}
+	return website, nil
 }
 
 func (w *Website) Update() error {

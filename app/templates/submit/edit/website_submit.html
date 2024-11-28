@@ -1,4 +1,4 @@
-{{ define "file_add" }}
+{{ define "website_submit" }}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/file.css">
-    <title>Add File</title>
+    <link rel="stylesheet" href="/static/css/submit.css">
+    <title>Website Submit</title>
 </head>
 <body>
     <div class="body">
@@ -29,23 +29,10 @@
                 </div>
             </div>
             <div class="content">
-                <form id="fileUploadForm" action="/uploads/add/file/submit" method="POST" class="form" enctype="multipart/form-data">
-                    <label for="fileInput" class="file-label">
-                        Выберите файлы
-                        <input 
-                            type="file" 
-                            id="fileInput" 
-                            name="files[]" 
-                            accept=".pdf,.txt,.docx,.doc,.csv,.xlsx,.xls,.json" 
-                            multiple 
-                            required>
-                    </label>
-                    <p class="file-types">
-                        Поддерживаемые типы: PDF, TXT, DOCX, DOC, CSV, XLSX, XLS, JSON
-                    </p>
-                    <button type="submit" class="submit-btn">Загрузить</button>
-                    <p id="message" class="message"></p>
-                </form>
+                <div class="content-block">
+                    <p class="content__text">Ваш интернет ресурс усешно изменен!</p>
+                    <a href="/uploads/" class="content__link">вернуться к загрузкам</a>
+                </div>
             </div>
         </div>
     </div>

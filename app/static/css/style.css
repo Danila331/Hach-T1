@@ -120,10 +120,41 @@ body {
     border-radius: 5px;
     border: 1px solid #E5E7EB;
     margin-bottom: 15px;
+    transition: all .3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 .card__button {
     margin-left: auto;
+}
+
+.card__link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: #3e4040;
+}
+
+.delete {
+    margin-left: auto;
+}
+.delete-btn {
+    background-color: #000000; /* Нежно-красный цвет */
+    color: white; /* Белый текст */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Скругленные углы */
+    padding: 10px 20px; /* Внутренние отступы */
+    font-size: 16px; /* Размер текста */
+    cursor: pointer; /* Указатель мыши при наведении */
+    transition: background-color 0.3s ease; /* Плавная анимация */
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f; /* Темно-красный при наведении */
 }
 
 .card__image {
@@ -137,4 +168,76 @@ body {
 
 .card__buttton-image {
     width: 24px;
+}
+
+.cards-node {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.card-node {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 16px auto;
+    width: 300px;
+    padding: 16px 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-node:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-node__title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #131313;
+    margin-bottom: 4px;
+}
+
+.card-node__text {
+    font-size: 14px;
+    color: #343a40;
+    margin-bottom: 12px;
+}
+
+.arrow {
+    width: 200px;
+    height: 50px;
+}
+
+.arrow:last-of-type {
+    display: none;
+}
+
+.card-node__link {
+    text-decoration: none;
+}
+
+.node-form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: end;
+}
+
+.card-node__button {
+    background-color: black; /* Нежно-красный цвет */
+    color: white; /* Белый текст */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Скругленные углы */
+    padding: 5px 10px; /* Внутренние отступы */
+    font-size: 11px; /* Размер текста */
+    cursor: pointer; /* Указатель мыши при наведении */
+    transition: background-color 0.3s ease;
+}
+
+.card-node__button:hover {
+    background-color: #d32f2f; /* Темно-красный при наведении */
 }

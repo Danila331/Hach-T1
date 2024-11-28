@@ -28,7 +28,7 @@ func main() {
 	_, err = conn.Exec(`
     CREATE TABLE IF NOT EXISTS nodes (
         id SERIAL PRIMARY KEY,
-        node_type TEXT NOT NULL,
+        type TEXT NOT NULL,
         text TEXT NOT NULL,
         should_to_do TEXT
     )

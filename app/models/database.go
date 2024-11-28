@@ -15,6 +15,7 @@ type Database struct {
 type DatabaseInterface interface {
 	Create() error
 	ReadAll() ([]Database, error)
+	ReadByID() (Database, error)
 	Update() error
 	Delete() error
 }
@@ -53,6 +54,21 @@ func (d *Database) ReadAll() ([]Database, error) {
 		databases = append(databases, database)
 	}
 	return databases, nil
+}
+
+func (d *Database) ReadByID() (Database, error) {
+	conn, err := store.ConnectDB()
+	if err != nil {
+		return Database{}, err
+	}
+	defer conn.Close()
+	row := conn.QueryRow("SELECT * FROM databases WHERE id=$1", d.ID)
+	var database Database
+	err = row.Scan(&database.ID, &database.Type, &database.Host, &database.Port, &database.UserName, &database.Password, &database.DatabaseName)
+	if err != nil {
+		return Database{}, err
+	}
+	return database, nil
 }
 
 func (d *Database) Update() error {

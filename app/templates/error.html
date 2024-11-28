@@ -1,4 +1,4 @@
-{{ define "file_add" }}
+{{ define "error" }}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/file.css">
-    <title>Add File</title>
+    <link rel="stylesheet" href="/static/css/submit.css">
+    <title>error</title>
 </head>
 <body>
     <div class="body">
@@ -18,7 +18,7 @@
             <div class="naviagtion__block1">
                 <a href="" class="block1__text"><img src="/static/images/brick.png" alt="" class="block1__image">Конструктор<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
                 <a href="" class="block1__text"><img src="/static/images/llm.png" alt="" class="block1__image">Выбор LLM<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
-                <a class="block1__text" href="/uploads/" style="background-color: #E5E7EB;"><img src="/static/images/upload.png" alt="" class="block1__image">Загрузка<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
+                <a href="/uploads/" class="block1__text"><img src="/static/images/upload.png" alt="" class="block1__image">Загрузка<img src="/static/images/right-arrow.png" alt="" class="block1__image"></a>
             </div>
         </div>
         <div class="main">
@@ -29,26 +29,13 @@
                 </div>
             </div>
             <div class="content">
-                <form id="fileUploadForm" action="/uploads/add/file/submit" method="POST" class="form" enctype="multipart/form-data">
-                    <label for="fileInput" class="file-label">
-                        Выберите файлы
-                        <input 
-                            type="file" 
-                            id="fileInput" 
-                            name="files[]" 
-                            accept=".pdf,.txt,.docx,.doc,.csv,.xlsx,.xls,.json" 
-                            multiple 
-                            required>
-                    </label>
-                    <p class="file-types">
-                        Поддерживаемые типы: PDF, TXT, DOCX, DOC, CSV, XLSX, XLS, JSON
-                    </p>
-                    <button type="submit" class="submit-btn">Загрузить</button>
-                    <p id="message" class="message"></p>
-                </form>
+                <div class="content-block">
+                    <p class="content__text"><span style="color: rgb(0, 115, 255); font-size: 30px;">{{ .Code }}</span></p>
+                    <p class="content__text"><span style="font-size: 20px;">{{ .Message }}</span></p>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
-{{ end }}
+{{ end}}

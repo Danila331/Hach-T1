@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15  # Указываем образ PostgreSQL
+    container_name: postgres-local
+    environment:
+      POSTGRES_USER: myuser       # Установите пользователя
+      POSTGRES_PASSWORD: mypassword  # Установите пароль
+      POSTGRES_DB: mydatabase     # Название базы данных
+    ports:
+      - "5432:5432"  # Пробрасываем порт для локального доступа
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Храним данные в volume для сохранения между перезапусками
+
+  app:
+    build: 
+        context: .
+        dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DB_CONNECTION_STRING: "postgresql://myuser:mypassword@postgres:5432/mydatabase?sslmode=disable"
+    ports:
+      - "8080:8080"  # Пробрасываем порт для доступа к приложению
+
+volumes:
+  postgres_data:
